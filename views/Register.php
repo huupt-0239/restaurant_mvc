@@ -19,7 +19,7 @@
         </table>
         <div style="display: flex; flex-direction: column;">
             <div style="margin: auto;">
-                <h2 style="text-align: center;">LOGIN</h2>
+                <h2 style="text-align: center;">REGISTER</h2>
                 <div style="display: flex;">
                     <p style="min-width: 80px; margin: 0;">Username</p>
                     <input type="text" name="username">
@@ -32,7 +32,7 @@
                     <span name="sp1" style="color: red;" class="sp1"></span>
                 </div>
                 <div style="display: flex; justify-content: center; margin-top: 10px;">
-                    <input type="submit" name="registier" value="Register">
+                    <input type="submit" name="register" value="Register">
                     <input type="reset" name="resetBtn" value="Reset">
                 </div>
             </div>
