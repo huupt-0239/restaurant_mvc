@@ -31,11 +31,8 @@
                 <div style="display: flex; justify-content: center; white-space: nowrap; margin-top: 10px">
                     <span name="sp1" style="color: red;" class="sp1"></span>
                 </div>
-                <div style="display: flex; justify-content: center; white-space: nowrap; margin-top: 10px">
-                    <a href="./Register.php">Register</a>
-                </div>
                 <div style="display: flex; justify-content: center; margin-top: 10px;">
-                    <input type="submit" name="login" value="Login">
+                    <input type="submit" name="registier" value="Register">
                     <input type="reset" name="resetBtn" value="Reset">
                 </div>
             </div>
