@@ -1,3 +1,3 @@
 <?php
 session_start();
-include_once('controllers/UserController.php');
+header("Location: ./controllers/UserController.php");
