@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -19,7 +22,7 @@
         </table>
         <div style="display: flex; flex-direction: column;">
             <div style="margin: auto;">
-                <h2 style="text-align: center;">LOGIN</h2>
+                <h2 style="text-align: center;">REGISTER</h2>
                 <div style="display: flex;">
                     <p style="min-width: 80px; margin: 0;">Username</p>
                     <input type="text" name="username">
@@ -29,13 +32,16 @@
                     <input type="password" name="password">
                 </div>
                 <div style="display: flex; justify-content: center; white-space: nowrap; margin-top: 10px">
-                    <span name="sp1" style="color: red;" class="sp1"></span>
-                </div>
-                <div style="display: flex; justify-content: center; white-space: nowrap; margin-top: 10px">
-                    <a href="./Register.php">Register</a>
+                    <span name="sp1" style="color: red;" class="sp1">
+                        <?php if (isset($_SESSION['error'])) {
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                        }
+                        ?>
+                    </span>
                 </div>
                 <div style="display: flex; justify-content: center; margin-top: 10px;">
-                    <input type="submit" name="login" value="Login">
+                    <input type="submit" name="register" value="Register">
                     <input type="reset" name="resetBtn" value="Reset">
                 </div>
             </div>
