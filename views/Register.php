@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +32,13 @@
                     <input type="password" name="password">
                 </div>
                 <div style="display: flex; justify-content: center; white-space: nowrap; margin-top: 10px">
-                    <span name="sp1" style="color: red;" class="sp1"></span>
+                    <span name="sp1" style="color: red;" class="sp1">
+                        <?php if (isset($_SESSION['error'])) {
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                        }
+                        ?>
+                    </span>
                 </div>
                 <div style="display: flex; justify-content: center; margin-top: 10px;">
                     <input type="submit" name="register" value="Register">

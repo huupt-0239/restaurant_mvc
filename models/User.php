@@ -1,41 +1,54 @@
 <?php
+require_once 'DBConnection.php';
+
 class User
 {
+    private $conn;
+
     public function __construct()
     {
+        $db = new DBConnection();
+        $this->conn = $db->getConnection();
     }
 
-    public function find_user_by_username($username)
+
+    public function findUserByUsername($username)
     {
-        require_once('db_connect.php');
         $data = array();
         $sql = "SELECT * FROM users WHERE username = '$username'";
-        $result = $conn->query($sql);
+        $result = $this->conn->query($sql);
         while ($row = $result->fetch_assoc()) {
             $data[] = $row;
         }
         return $data;
     }
 
-    public function login()
+    public function isUsernameTaken($username)
     {
-        echo "login";
-        require_once('db_connect.php');
+        $sql = "SELECT COUNT(*) FROM users WHERE username = '$username'";
+        $result = $this->conn->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['COUNT(*)'] > 0;
+    }
+
+    public function login($username, $password)
+    {
         $data = array();
-        $sql = "SELECT * FROM users ";
-        $result = $conn->query($sql);
+        $sql = "SELECT * FROM users WHERE username = '$username'";
+        $result = $this->conn->query($sql);
         while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
+            if (password_verify($password, $row['password'])) {
+                $data[] = $row;
+            }
         }
         return $data;
     }
 
     public function register($username, $password)
     {
-        require_once('db_connect.php');
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO users (username, password) VALUES ('$username', '$hashed_password')";
-        $result = $conn->query($sql);
+        $result = $this->conn->query($sql);
         return $result;
     }
 }

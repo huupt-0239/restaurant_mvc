@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once("../Model/User.php");
+require_once("../models/User.php");
 class UserController
 {
     public function __invoke()
@@ -8,27 +8,34 @@ class UserController
         if (isset($_POST['login'])) {
             $username = $_REQUEST['username'];
             $password = $_REQUEST['password'];
-
-            $modelUser = new User();
-            $user = $modelUser->login($username, $password);
+            $userModel = new User();
+            $user = $userModel->login($username, $password);
             if ($user != null) {
-                
+                $userTmp = [
+                    'id' => $user[0]['id'],
+                    'username' => $user[0]['username'],
+                ];
+                $_SESSION['user'] = $userTmp;
+                header("Location: ../views/Dashboard.php");
             }
-        }
-        elseif (isset($_POST['register'])) {
+        } elseif (isset($_POST['register'])) {
             $username = $_REQUEST['username'];
             $password = $_REQUEST['password'];
-            $modelUser = new User();
-            $user = $modelUser->register($username, $password);
-            if ($user != null) {
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['user_id'] = $user['id'];
-                header("Location: ./views/Home.php");
+            $userModel = new User();
+            if ($userModel->isUsernameTaken($username)) {
+                $_SESSION['error'] = "Username is taken";
+                header("Location: ../views/Register.php");
             } else {
-                header("Location: ./views/Login.php");
+                $user = $userModel->register($username, $password);
+                if ($user != null) {
+                    header("Location: ../views/Login.php");
+                } else {
+                    $_SESSION['error'] = "Username is taken";
+                    header("Location: ../views/Register.php");
+                }
             }
         } else {
-            header("Location: ./views/Login.php");
+            header("Location: ../views/Login.php");
         }
     }
 };
