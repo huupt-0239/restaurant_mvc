@@ -65,7 +65,8 @@ class RememberTokenController
                 if ($user) {
                     $userTmp = [
                         'id' => $user['id'],
-                        'username' => $user['username'],
+                        'email' => $user['email'],
+                        'name' => $user['name'],
                     ];
                     $_SESSION['user'] = $userTmp;
                     return true;

@@ -6,6 +6,10 @@ require_once("../controllers/RememberTokenController.php");
 if($rememberTokenController->isUserLoggedIn()){
     header("Location: ../views/Dashboard.php");
 }
+$validate = $_SESSION['validate'] ?? [];
+$input = $_SESSION['input'] ?? [];
+unset($_SESSION['validate']);
+unset($_SESSION['input']);
 ?>
 
 <head>
@@ -21,6 +25,9 @@ if($rememberTokenController->isUserLoggedIn()){
             box-shadow: none;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3.3.0/notyf.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
 
 <body>
     <div class="flex min-h-screen min-w-full flex-col justify-center px-6 py-12 lg:px-8 justify-center items-center bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400">
@@ -32,19 +39,28 @@ if($rememberTokenController->isUserLoggedIn()){
 
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form action="../controllers/UserController.php" class="space-y-6" method="post">
-                    <div class="relative">
-                        <input required="" type="text" name="username" id="username" class="block focus:border-rose-500 border-2 px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-rose-500 peer" placeholder=" ">
-                        <label for="username" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-[0.8] top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-4 left-1">Username</label>
+                <div>
+                        <div class="relative">
+                            <input type="text" name="email" id="email" class="block focus:border-rose-500 border-2 px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-rose-500 peer" placeholder=" " value="<?php echo $input['email'] ?? ''; ?>">
+                            <label for="email" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-[0.8] top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-4 left-1">Email</label>
+                        </div>
+                        <?php if (isset($validate['email'])) : ?>
+                            <p class="text-red-500 text-xs"><?php echo $validate['email']; ?></p>
+                        <?php endif; ?>
                     </div>
-
-                    <div class="relative">
-                        <input required="" type="password" name="password" id="password" class="block focus:border-rose-500 border-2 px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-rose-500 peer" placeholder=" ">
-                        <label for="password" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-[0.8] top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-4 left-1">Password</label>
+                    <div>
+                        <div class="relative">
+                            <input type="password" name="password" id="password" class="block focus:border-rose-500 border-2 px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-rose-500 peer" placeholder=" " value="<?php echo $input['password'] ?? ''; ?>">
+                            <label for="password" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-[0.8] top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-4 left-1">Password</label>
+                        </div>
+                        <?php if (isset($validate['password'])) : ?>
+                            <p class="text-red-500 text-xs"><?php echo $validate['password']; ?></p>
+                        <?php endif; ?>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input checked id="remember" type="checkbox" name="remember" value="remember" class="w-4 h-4 text-rose-500 bg-gray-100 border-gray-300 rounded focus:ring-rose-500 focus:ring-2">
+                                <input id="remember" type="checkbox" name="remember" value="remember" class="w-4 h-4 text-rose-500 bg-gray-100 border-gray-300 rounded focus:ring-rose-500 focus:ring-2">
                             </div>
                             <div class="ml-3 text-sm">
                                 <label for="remember" class="text-gray-500 ">Remember me</label>
@@ -64,9 +80,7 @@ if($rememberTokenController->isUserLoggedIn()){
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3.3.0/notyf.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    
     <script>
         const notyf = new Notyf({
             position: {
@@ -77,7 +91,12 @@ if($rememberTokenController->isUserLoggedIn()){
         // Check if there is an error message in the session
         <?php if (isset($_SESSION['error'])) : ?>
             notyf.error('<?php echo $_SESSION['error']; ?>');
-            <?php unset($_SESSION['error']); // Clear the error message after displaying 
+            <?php unset($_SESSION['error']);
+            ?>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['success'])) : ?>
+            notyf.success('<?php echo $_SESSION['success']; ?>');
+            <?php unset($_SESSION['success']);
             ?>
         <?php endif; ?>
     </script>

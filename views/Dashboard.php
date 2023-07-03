@@ -22,10 +22,11 @@ if(!$user) {
 </head>
 
 <body>
-    <h1>Welcome, <?php echo $user['username']; ?>!</h1>
+    <h1>Welcome, <?php echo $user['name']; ?>!</h1>
 
     <h2>User Information</h2>
-    <p>Name: <?php echo $user['username']; ?></p>
+    <p>Email: <?php echo $user['email']; ?></p>
+    <p>Name: <?php echo $user['name']; ?></p>
     <p>User ID: <?php echo $user['id']; ?></p>
 
     <!-- Add more information as needed -->
