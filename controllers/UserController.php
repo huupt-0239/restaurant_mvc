@@ -24,8 +24,7 @@ class UserController
         $validate = [];
         if (empty($input['email'])) {
             $validate['email'] = "Email is required";
-        }
-        elseif (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
+        } elseif (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
             $validate['email'] = "Email is invalid";
         }
         if (empty($input['password'])) {
@@ -56,7 +55,7 @@ class UserController
                     setcookie('remember_token', null, -1, '/', 'localhost');
                 }
             }
-            header("Location: ../views/Dashboard.php");
+            header("Location: ../controllers/RestaurantController.php?mod=restaurant&act=list");
         } else {
             $_SESSION['error'] = "Username or password is incorrect";
             header("Location: ../views/Login.php");

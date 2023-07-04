@@ -1,6 +1,6 @@
 <?php
-require_once("../models/RememberToken.php");
-require_once("../models/User.php");
+require_once(__DIR__ . "/../models/RememberToken.php");
+require_once(__DIR__ . "/../models/User.php");
 
 class RememberTokenController
 {
