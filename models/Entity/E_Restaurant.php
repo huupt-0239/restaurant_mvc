@@ -13,5 +13,8 @@
             $this->img_url = $img_url;
             $this->user_id = $user_id;
         }
+
+        
+
     }
 ?>

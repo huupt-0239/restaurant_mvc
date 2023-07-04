@@ -55,7 +55,7 @@ class UserController
                     setcookie('remember_token', null, -1, '/', 'localhost');
                 }
             }
-            header("Location: ../controllers/RestaurantController.php?mod=restaurant&act=list");
+            header("Location: ../controllers/RestaurantController.php?mod=restaurant");
         } else {
             $_SESSION['error'] = "Username or password is incorrect";
             header("Location: ../views/Login.php");

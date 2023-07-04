@@ -1,28 +1,16 @@
+<?php
+require_once(__DIR__ . '/../../models/Restaurant.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-require_once(__DIR__ . "/../../controllers/RememberTokenController.php");
-require_once(__DIR__ . "/../../controllers/RestaurantController.php");
-
-// Retrieve user information from the session
-$user = $_SESSION['user'];
-if (!$user) {
-    if (!$rememberTokenController->isUserLoggedIn()) {
-        header("Location: ../views/Login.php");
-    } else {
-        header("Refresh:0");
-    }
-}
-?>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodnGo</title>
-    <link rel="stylesheet" href="./list.css">
+    <link rel="stylesheet" href="../views/Restaurant/main.css">
     <link href="https://cdn.jsdelivr.net/npm/notyf@3.3.0/notyf.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css" rel="stylesheet" />
     <style>
@@ -41,7 +29,7 @@ if (!$user) {
             <a class="mr-12" href="">Home</a>
             <a class="mr-12" href="">About</a>
             <a class="flex items-center mr-12" href="">
-                <img class="user-infor w-8 h-8 mr-2" src="../../public/img/user.png" alt="img_user">
+                <img class="user-infor w-8 h-8 mr-2" src="../public/img/user.png" alt="img_user">
                 <span class="user-name">Van Tanh Ly</span>
             </a>
 
@@ -52,22 +40,26 @@ if (!$user) {
 
     <div class="container">
         <div class="cards">
-            <div class="card">
-                <img src="../../public/img/res1.jpg" alt="" class="card-image" />
-                <div class="card-content">
-                    <div class="card-top">
-                        <h3 class="card-title">2020 World Champs Gaming Warzone</h3>
-                        <div class="card-user">
-                            <img src="C:\\xampp\\htdocs\\Sun\\restaurant_mvc\\public\\img\\res1.jpg" alt="" class="card-user-avatar" />
-                            <div class="card-user-info">
-                                <div class="card-user-top">
-                                    <h4 class="card-user-name">Tam Tran</h4>
-                                    <ion-icon name="checkmark-circle"></ion-icon>
+            <?php foreach ($restaurants as $restaurant) {
+            ?>
+                <div class="card">
+                    <a href="?act=detail&id=<?php echo $restaurant->id ?>">
+                        <img src=<?php echo $restaurant->img_url ?> alt="" class="card-image" />
+                        <div class="card-content">
+                            <div class="card-top">
+                                <h3 class="card-title"><?php echo $restaurant->name ?></h3>
+                                <div class="card-user">
+                                    <img src="../public/img/user.png" alt="" class="card-user-avatar" />
+                                    <div class="card-user-info">
+                                        <div class="card-user-top">
+                                            <h4 class="card-user-name">User ID: <?php echo $restaurant->user_id ?></h4>
+                                            <ion-icon name="checkmark-circle"></ion-icon>
+                                        </div>
+                                        <div class="card-user-game">Call of duty</div>
+                                    </div>
                                 </div>
-                                <div class="card-user-game">Call of duty</div>
                             </div>
-                        </div>
-                    </div>
+                    </a>
                     <div class="card-bottom">
                         <div class="card-live">
                             <ion-icon name="wifi"></ion-icon>
@@ -76,8 +68,12 @@ if (!$user) {
                         <div class="card-watching">4.2k watching</div>
                     </div>
                 </div>
-            </div>
         </div>
+    <?php
+            }
+    ?>
+    </div>
+    </div>
     </div>
     <footer class="flex h-40 w-auto bg-slate-50 text-center items-center justify-center">
         <p class="mt-12">Copyright 2023 FoodnGo with love ❤️</p>
@@ -85,3 +81,29 @@ if (!$user) {
 </body>
 
 </html>
+
+<div class="card">
+    <img src="https://images.unsplash.com/reserve/HgZuGu3gSD6db21T3lxm_San%20Zenone.jpg?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="" class="card-image" />
+    <div class="card-content">
+        <div class="card-top">
+            <h3 class="card-title">2020 World Champs Gaming Warzone</h3>
+            <div class="card-user">
+                <img src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="" class="card-user-avatar" />
+                <div class="card-user-info">
+                    <div class="card-user-top">
+                        <h4 class="card-user-name">Tam Tran</h4>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                    <div class="card-user-game">Call of duty</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-bottom">
+            <div class="card-live">
+                <ion-icon name="wifi"></ion-icon>
+                <span>Live</span>
+            </div>
+            <div class="card-watching">4.2k watching</div>
+        </div>
+    </div>
+</div>
