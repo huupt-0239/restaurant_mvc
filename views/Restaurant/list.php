@@ -31,13 +31,17 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
             </a>
             <a class="mr-12" href="">Home</a>
             <a class="mr-12" href="">About</a>
-            <a class="flex items-center" href="">
-                <img class="user-infor w-8 h-8 mr-2" src="../public/img/user.png" alt="img_user">
-                <span class="user-name"><?php echo $user_name?></span>
-            </a>
+            <div class="dropdown relative">
+                <a class="flex items-center" href="#" onclick="toggleDropdown()">
+                    <img class="user-infor w-8 h-8 mr-2" src="../public/img/user.png" alt="img_user">
+                    <span class="user-name"><?php echo $user_name ?></span>
+                </a>
+                <div id="dropdownMenu" class="dropdown-menu hidden absolute right-0 mt-2 bg-white rounded-md shadow-lg py-2">
+                    <a href="?act=logout" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">->Logout</a>
+                </div>
+            </div>
         </div>
     </div>
-
 
 
 
@@ -81,6 +85,34 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
     <footer class="flex h-40 w-auto bg-slate-50 text-center items-center justify-center">
         <p class="mt-12">Copyright 2023 FoodnGo with love ❤️</p>
     </footer>
+    <script>
+        function toggleDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.toggle("hidden");
+        }
+
+        <?php if (isset($_COOKIE['success'])) : ?>
+            const notyf = new Notyf({
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+            });
+            notyf.success("<?php echo $_COOKIE['success']; ?>");
+            document.cookie = "success=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        <?php endif; ?>
+
+        <?php if (isset($_COOKIE['fail'])) : ?>
+            const failNotyf = new Notyf({
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+            });
+            failNotyf.error("<?php echo $_COOKIE['fail']; ?>");
+            document.cookie = "fail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        <?php endif; ?>
+    </script>
 </body>
 
 </html>

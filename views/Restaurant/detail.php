@@ -29,7 +29,7 @@ if ($restaurant) {
     </head>
 
     <body>
-        <div class="flex mt-36 items-center justify-center h-screen">
+        <div class="flex mt-36 mb-36 items-center justify-center h-screen">
             <form class="w-1/3 bg-white rounded shadow p-8" action="" method="get">
                 <input type="hidden" name="act" value="edit">
                 <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
@@ -50,7 +50,7 @@ if ($restaurant) {
                     <input class="ml-[110px] justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="text" name="user" value="<?php echo $user_id ?>">
                 </div>
                 <div class="flex text-center items-center mb-16">
-                    <h2>Image URL</h2> 
+                    <h2>Image URL</h2>
                     <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url ?>">
                 </div>
                 <div class="flex justify-center mb-12">

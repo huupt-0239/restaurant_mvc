@@ -66,7 +66,7 @@ class RestaurantController
         $image_url = isset($_GET['img_url']) ? $_GET['img_url'] : '';
         if ($user_id != $this->user_id) {
             setcookie('fail', 'Bạn không có quyền sửa', time() + 5);
-            header('Location: RestaurantController.php?act=detail&id=' . $id);
+            header('Location: RestaurantController.php?act=list');
         } else {
 
             $restaurant = $this->model->edit($id, $name, $description, $image_url, $user_id);

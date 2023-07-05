@@ -75,7 +75,7 @@ class User
     public function register($email, $name, $password)
     {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$hashed_password')";
+        $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$hashed_password');";
         $result = $this->conn->query($sql);
         return $result;
     }
