@@ -25,17 +25,20 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
 
 <body>
     <div class="header h-24 w-auto bg-[#f5f5f5] text-xl">
-        <div class="navbar float-right mt-8 mr-12 text-center flex">
+        <div class="navbar float-right mt-8 mr-12 text-center flex items-center">
+            <a class="mr-48" href="?act=add">
+                <button class="rounded bg-blue-500 text-white px-4 py-2">+ Create</button>
+            </a>
             <a class="mr-12" href="">Home</a>
             <a class="mr-12" href="">About</a>
-            <a class="flex items-center mr-12" href="">
+            <a class="flex items-center" href="">
                 <img class="user-infor w-8 h-8 mr-2" src="../public/img/user.png" alt="img_user">
-                <span class="user-name">Van Tanh Ly</span>
+                <span class="user-name"><?php echo $user_name?></span>
             </a>
-
-
         </div>
     </div>
+
+
 
 
     <div class="cards">

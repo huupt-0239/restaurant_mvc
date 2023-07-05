@@ -29,7 +29,8 @@ class Restaurant
     public function store($name, $description, $img_url, $user_id )
     {
         $result = false;
-        $sql = "INSERT INTO restaurants(name, description, img_url, user_id) VALUES ('$name', '$description', '$img_url', '$user_id')";
+        $sql = "INSERT INTO restaurants(name, description, img_url, user_id) 
+                VALUES ('$name', '$description', '$img_url', '$user_id')";
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }
@@ -55,9 +56,9 @@ class Restaurant
         return $result;
     }
 
-    public function delete($id) {
+    public function delete($id, $user_id) {
         $result = false;
-        $sql = "DELETE FROM restaurants WHERE id = $id";
+        $sql = "DELETE FROM restaurants WHERE id = $id AND user_id = $user_id";
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }
