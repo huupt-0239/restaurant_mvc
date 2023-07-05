@@ -1,5 +1,4 @@
 <?php
-require_once(__DIR__ . '/../../controllers/RestaurantController.php');
 if ($restaurant) {
     $id = $restaurant['id'];
     $name = $restaurant['name'];
@@ -30,14 +29,50 @@ if ($restaurant) {
     </head>
 
     <body>
-        <h1>Restaurant Detail</h1>
-        <div>
-            <h2><?php echo $name; ?></h2>
-            <p><?php echo $description; ?></p>
-            <img src="<?php echo $image_url; ?>" alt="Restaurant Image">
-            <p>User ID: <?php echo $user_id; ?></p>
+        <div class="flex mt-36 mb-36 items-center justify-center h-screen">
+            <form class="w-1/3 bg-white rounded shadow p-8" action="" method="get">
+                <input type="hidden" name="act" value="edit">
+                <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
+                <div class="flex text-center items-center mb-6">
+                    <h2>ID</h2>
+                    <input class="ml-36 justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="text" name="id" value="<?php echo $id ?>">
+                </div>
+                <div class="flex text-center items-center mb-6">
+                    <h2>Restaurant Name</h2>
+                    <input class="ml-10 justify-center rounded border border-gray-300 w-[17rem] px-3 py-2" type="text" name="name" value="<?php echo $name ?>">
+                </div>
+                <div class="flex text-center items-center mb-6">
+                    <h2>Description</h2>
+                    <input class="ml-20 justify-center rounded border border-gray-300 px-3 w-[17rem] py-2" type="text" name="description" value="<?php echo $description ?>">
+                </div>
+                <div class="flex text-center items-center mb-6">
+                    <h2>User ID</h2>
+                    <input class="ml-[110px] justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="text" name="user" value="<?php echo $user_id ?>">
+                </div>
+                <div class="flex text-center items-center mb-16">
+                    <h2>Image URL</h2>
+                    <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url ?>">
+                </div>
+                <div class="flex justify-center mb-12">
+                    <img src="<?php echo $image_url ?>" alt="Restaurant Image" style="width: 400px; height: auto;">
+                </div>
+                <div class="flex justify-between">
+                    <button class="rounded bg-blue-500 text-white px-6 py-2" type="submit">Edit</button>
+                    <button class="rounded bg-red-500 text-white px-6 py-2" type="button" onclick="deleteRestaurant()">Delete</button>
+                </div>
+            </form>
+            <form id="deleteForm" action="" method="GET" style="display: none;">
+                <input type="hidden" name="act" value="delete">
+                <input type="hidden" name="id" value="<?php echo $id ?>">
+            </form>
         </div>
+
     </body>
+    <script>
+        function deleteRestaurant() {
+            document.getElementById("deleteForm").submit();
+        }
+    </script>
 
     </html>
 <?php

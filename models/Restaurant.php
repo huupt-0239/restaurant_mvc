@@ -26,11 +26,11 @@ class Restaurant
         return $restaurants;
     }
 
-    public function store($data)
+    public function store($name, $description, $img_url, $user_id )
     {
         $result = false;
-        $sql = "INSERT INTO restaurants (name, description, img_url, user_id,) 
-            VALUES ('" . $data['name'] . "', '" . $data['description'] . "', '" . $data['img_url'] . "', '" . $data['user_id'] ."')";
+        $sql = "INSERT INTO restaurants(name, description, img_url, user_id) 
+                VALUES ('$name', '$description', '$img_url', '$user_id')";
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }
@@ -45,5 +45,23 @@ class Restaurant
             $data = $result->fetch_assoc();
         }
         return $data;
+    }
+
+    public function edit($id, $name, $description, $img_url, $user_id) {
+        $result = false;
+        $sql = "UPDATE restaurants SET name = '$name', description = '$description', img_url = '$img_url', user_id = '$user_id' WHERE id = $id";
+        if ($this->conn->query($sql) === TRUE) {
+            $result = true;
+        }
+        return $result;
+    }
+
+    public function delete($id, $user_id) {
+        $result = false;
+        $sql = "DELETE FROM restaurants WHERE id = $id AND user_id = $user_id";
+        if ($this->conn->query($sql) === TRUE) {
+            $result = true;
+        }
+        return $result;
     }
 }
