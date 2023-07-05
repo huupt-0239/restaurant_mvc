@@ -1,5 +1,4 @@
 <?php
-require_once(__DIR__ . '/../../controllers/RestaurantController.php');
 if ($restaurant) {
     $id = $restaurant['id'];
     $name = $restaurant['name'];
@@ -30,13 +29,38 @@ if ($restaurant) {
     </head>
 
     <body>
-        <h1>Restaurant Detail</h1>
-        <div>
-            <h2><?php echo $name; ?></h2>
-            <p><?php echo $description; ?></p>
+        <form class="ml-12 mr-12 mt-1 mb-12 flex flex-col" action="" method="get">
+            <input type="hidden" name="act" value="edit">
+            <h1 class="text-center text-4xl mb-12">Restaurant Detail</h1>
+            <div class="flex text-center items-center mb-12">
+                <h2>ID</h2>
+                <input class="ml-16 justify-center rounded" type="text" name="id" value="<?php echo $id ?> ">
+            </div>
+            <div class="flex text-center items-center mb-12">
+                <h2>Restaurant Name</h2>
+                <input class="ml-16 justify-center rounded" type="text" name="name" value="<?php echo $name ?> ">
+            </div>
+            <div class="flex text-center items-center mb-12">
+                <h2>Description</h2>
+                <input class=" px-12 ml-16 justify-center" type="text" name="description" value="<?php echo $description; ?>">
+            </div>
+            <div class="flex text-center items-center mb-12">
+                <h2>User ID</h2>
+                <input class="px-12 ml-16 justify-center" type="text" name="user" value="<?php echo $user_id; ?>">
+            </div>
+            <div class="flex text-center items-center mb-12">
+                <h2>Image URL</h2>
+                <input type="input" name="img_url" value="<?php echo $image_url ?>">
+            </div>
             <img src="<?php echo $image_url; ?>" alt="Restaurant Image">
-            <p>User ID: <?php echo $user_id; ?></p>
-        </div>
+            <input class="px-12 ml-16 justify-center" type="submit" value="Edit">
+        </form>
+
+        <form action="" method="GET">
+            <input type="hidden" name="act" value="delete">
+            <input type="hidden" name="id" value="<?php echo $id ?>">
+            <input type="submit" value="Delete">
+        </form>
     </body>
 
     </html>

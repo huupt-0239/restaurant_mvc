@@ -38,40 +38,42 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
     </div>
 
 
-    <div class="container">
-        <div class="cards">
-            <?php foreach ($restaurants as $restaurant) {
-            ?>
-                <div class="card">
-                    <a href="?act=detail&id=<?php echo $restaurant->id ?>">
-                        <img src=<?php echo $restaurant->img_url ?> alt="" class="card-image" />
-                        <div class="card-content">
-                            <div class="card-top">
-                                <h3 class="card-title"><?php echo $restaurant->name ?></h3>
-                                <div class="card-user">
-                                    <img src="../public/img/user.png" alt="" class="card-user-avatar" />
-                                    <div class="card-user-info">
-                                        <div class="card-user-top">
-                                            <h4 class="card-user-name">User ID: <?php echo $restaurant->user_id ?></h4>
-                                            <ion-icon name="checkmark-circle"></ion-icon>
-                                        </div>
-                                        <div class="card-user-game">Call of duty</div>
+    <div class="cards">
+        <?php foreach ($restaurants as $restaurant) {
+        ?>
+            <div class="card">
+                <a href="?act=detail&id=<?php echo $restaurant->id ?>">
+                    <img src=<?php echo $restaurant->img_url ?> alt="" class="card-image" />
+                    <div class="card-content">
+                        <div class="card-top">
+                            <h3 class="card-title"><?php echo $restaurant->name ?></h3>
+                            <div class="card-user">
+                                <img src="../public/img/user.png" alt="" class="card-user-avatar" />
+                                <div class="card-user-info">
+                                    <div class="card-user-top">
+                                        <h4 class="card-user-name">User ID: <?php echo $restaurant->user_id ?></h4>
+                                        <ion-icon name="checkmark-circle"></ion-icon>
                                     </div>
+                                    <div class="card-user-game">Call of duty</div>
                                 </div>
                             </div>
-                    </a>
-                    <div class="card-bottom">
-                        <div class="card-live">
-                            <ion-icon name="wifi"></ion-icon>
-                            <span>Live</span>
                         </div>
-                        <div class="card-watching">4.2k watching</div>
+                        <div class="card-bottom">
+                            <div class="card-live">
+                                <ion-icon name="wifi"></ion-icon>
+                                <span>Live</span>
+                            </div>
+                            <div class="card-watching">
+                                <ion-icon name="eye"></ion-icon>
+                                <span>1.2k watching</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-        </div>
-    <?php
-            }
-    ?>
+                </a>
+            </div>
+        <?php
+        }
+        ?>
     </div>
     <footer class="flex h-40 w-auto bg-slate-50 text-center items-center justify-center">
         <p class="mt-12">Copyright 2023 FoodnGo with love ❤️</p>
