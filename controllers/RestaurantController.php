@@ -47,13 +47,19 @@ class RestaurantController
         $name = isset($_GET['name']) ? $_GET['name'] : '';
         $description = isset($_GET['description']) ? $_GET['description'] : '';
         $image_url = isset($_GET['img_url']) ? $_GET['img_url'] : '';
-        $status = $this->model->store($name, $description, $image_url, $this->user_id);
-        if ($status == true) {
-            setcookie('success', 'Thêm mới thành công', time() + 5);
-            header('Location: RestaurantController.php?act=list');
-        } else {
-            setcookie('fail', 'Thêm mới thất bại', time() + 5);
+        if ($name == '' || $description == '' || $image_url == '') {
+            setcookie('fail', 'All fields are required', time() + 10);
             header('Location: RestaurantController.php?act=add');
+        } else {
+
+            $status = $this->model->store($name, $description, $image_url, $this->user_id);
+            if ($status == true) {
+                setcookie('success', 'Thêm mới thành công', time() + 5);
+                header('Location: RestaurantController.php?act=list');
+            } else {
+                setcookie('fail', 'Thêm mới thất bại', time() + 5);
+                header('Location: RestaurantController.php?act=add');
+            }
         }
     }
 

@@ -35,7 +35,8 @@ if ($restaurant) {
                 <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
                 <div class="flex text-center items-center mb-6">
                     <h2>ID</h2>
-                    <input class="ml-36 justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="text" name="id" value="<?php echo $id ?>">
+                    <input class="ml-36 justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="text" name="" value="<?php echo $id ?>" disabled>
+                    <input class="ml-36 justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="hidden" name="id" value="<?php echo $id ?>">
                 </div>
                 <div class="flex text-center items-center mb-6">
                     <h2>Restaurant Name</h2>
@@ -45,10 +46,7 @@ if ($restaurant) {
                     <h2>Description</h2>
                     <input class="ml-20 justify-center rounded border border-gray-300 px-3 w-[17rem] py-2" type="text" name="description" value="<?php echo $description ?>">
                 </div>
-                <div class="flex text-center items-center mb-6">
-                    <h2>User ID</h2>
-                    <input class="ml-[110px] justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="text" name="user" value="<?php echo $user_id ?>">
-                </div>
+                <input class="ml-[110px] justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="hidden" name="user" value="<?php echo $user_id ?>">
                 <div class="flex text-center items-center mb-16">
                     <h2>Image URL</h2>
                     <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url ?>">
@@ -57,8 +55,8 @@ if ($restaurant) {
                     <img src="<?php echo $image_url ?>" alt="Restaurant Image" style="width: 400px; height: auto;">
                 </div>
                 <div class="flex justify-between">
-                    <button class="rounded bg-blue-500 text-white px-6 py-2" type="submit">Edit</button>
-                    <button class="rounded bg-red-500 text-white px-6 py-2" type="button" onclick="deleteRestaurant()">Delete</button>
+                    <button class="rounded bg-blue-500 text-white px-6 py-2 ml-20" type="submit">Edit</button>
+                    <button class="rounded bg-red-500 text-white px-6 py-2 mr-20" type="button" onclick="deleteRestaurant()">Delete</button>
                 </div>
             </form>
             <form id="deleteForm" action="" method="GET" style="display: none;">
