@@ -30,7 +30,7 @@ if ($restaurant) {
 
     <body>
         <div class="flex mt-36 mb-36 items-center justify-center h-screen">
-            <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=update" method="POST">
+            <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=update&id=<?php echo $id ?>" method="post">
                 <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
                 <div class="flex text-center items-center mb-6">
                     <h2>ID</h2>
@@ -58,9 +58,9 @@ if ($restaurant) {
                     <button class="rounded bg-red-500 text-white px-6 py-2 mr-20" type="button" onclick="deleteRestaurant()">Delete</button>
                 </div>
             </form>
-            <form id="deleteForm" action="?mod=restaurant&act=delete&id=<?php echo $id?>" method="GET" style="display: none;">
-                <input type="hidden" name="id" value="<?php echo $id ?>">
-            </?>
+            <form id="deleteForm" action="?mod=restaurant&act=delete&id=<?php echo $id ?>" method="POST">
+                <input type="hiden" name="id" value="<?php echo $id?>">
+            </form>
         </div>
 
     </body>

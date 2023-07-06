@@ -4,7 +4,7 @@ class DBConnection {
     private $host = 'localhost';
     private $dbname = 'restaurant';
     private $username = 'root';
-    private $password = 'Huu@22112123';
+    private $password = '';
     protected $conn;
 
     public function __construct() {
