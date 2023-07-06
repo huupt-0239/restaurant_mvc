@@ -1,17 +1,10 @@
 <?php
-require_once 'DBConnection.php';
+require_once 'Base.php';
 require_once 'Entity/E_Restaurant.php';
 
 
-class Restaurant
+class Restaurant extends Base
 {
-    private $conn;
-
-    public function __construct()
-    {
-        $db = new DBConnection();
-        $this->conn = $db->getConnection();
-    }
 
     public function list()
     {
@@ -25,9 +18,13 @@ class Restaurant
         }
         return $restaurants;
     }
-
-    public function store($name, $description, $img_url, $user_id)
+    public function store($input)
     {
+        $name = $input['name'];
+        $description = $input['description'];
+        $img_url = $input['img_url'];
+        $user_id = $input['user_id'];
+
         $result = false;
         $sql = "INSERT INTO restaurants(name, description, img_url, user_id) 
                 VALUES ('$name', '$description', '$img_url', '$user_id')";
@@ -38,7 +35,7 @@ class Restaurant
         return $result;
     }
 
-    public function detail($id)
+    public function findById($id)
     {
         $data = array();
         $sql = "SELECT * FROM restaurants WHERE id = $id";
@@ -48,9 +45,12 @@ class Restaurant
         }
         return $data;
     }
-
-    public function edit($id, $name, $description, $img_url, $user_id)
+    public function edit($id, $input)
     {
+        $name = $input['name'];
+        $description = $input['description'];
+        $img_url = $input['img_url'];
+        $user_id = $input['user_id'];
         $result = false;
         $sql = "UPDATE restaurants SET name = '$name', description = '$description', img_url = '$img_url', user_id = '$user_id' WHERE id = $id;";
         if ($this->conn->query($sql) === TRUE) {
@@ -62,7 +62,7 @@ class Restaurant
     public function delete($id)
     {
         $result = false;
-        $sql = "DELETE FROM restaurants WHERE id = $id;";
+        $sql = "DELETE FROM restaurants WHERE id = $id";
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }

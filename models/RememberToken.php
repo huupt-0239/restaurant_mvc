@@ -1,15 +1,8 @@
 <?php
-require_once 'DBConnection.php';
+require_once 'Base.php';
 
-class RememberToken
+class RememberToken extends Base
 {
-    private $conn;
-
-    public function __construct()
-    {
-        $db = new DBConnection();
-        $this->conn = $db->getConnection();
-    }
 
     public function findUserTokenBySelector(string $selector)
     {
@@ -27,7 +20,7 @@ class RememberToken
         return $data;
     }
 
-    public function deleteTokenByUserId(string $user_id): bool
+    public function delete($user_id)
     {
         $sql = "DELETE FROM user_tokens WHERE user_id = '$user_id'";
         $result = $this->conn->query($sql);
@@ -35,12 +28,47 @@ class RememberToken
         return $result;
     }
 
-    public function insert(int $user_id, string $selector, string $hashed_validator, string $expiry): bool
+    public function store($input)
     {
+        $user_id = $input['user_id'];
+        $selector = $input['selector'];
+        $hashed_validator = $input['hashed_validator'];
+        $expiry = $input['expiry'];
+
         $sql = "INSERT INTO user_tokens(user_id, selector, hashed_validator, expiry)
                 VALUES ('$user_id', '$selector', '$hashed_validator', '$expiry')";
         $result = $this->conn->query($sql);
 
         return $result;
+    }
+
+    public function list()
+    {
+        $data = array();
+        $sql = "SELECT * FROM user_tokens";
+        $result = $this->conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
+    public function detail($id)
+    {
+        $data = array();
+        $sql = "SELECT * FROM user_tokens WHERE id = '$id'";
+        $result = $this->conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $data = $row;
+        }
+        return $data;
+    }
+
+    public function edit($id, $input)
+    {
+    }
+
+    public function findById($id)
+    {
     }
 }

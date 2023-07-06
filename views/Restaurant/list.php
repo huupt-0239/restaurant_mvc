@@ -42,8 +42,6 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
         </div>
     </div>
 
-
-
     <div class="cards">
         <?php foreach ($restaurants as $restaurant) {
         ?>
@@ -53,7 +51,6 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
                     <div class="card-content">
                         <div class="card-top">
                             <h3 class="card-title"><?php echo $restaurant->name ?></h3>
-
                         </div>
                         <div class="card-bottom">
                             <div class="card-user">
