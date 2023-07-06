@@ -1,9 +1,8 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require_once("../models/User.php");
-require_once("RememberTokenController.php");
+require_once(__DIR__ . "/../models/User.php");
+require_once(__DIR__ . "/RememberTokenController.php");
 class UserController
 {
     private $rememberTokenController;
@@ -12,12 +11,13 @@ class UserController
     {
         $this->rememberTokenController = new RememberTokenController();
         if ($this->rememberTokenController->isUserLoggedIn()) {
-            header("Location: ../views/Dashboard.php");
+            header("Location: ?mod=restaurant&act=list");
         }
     }
 
     public function login()
     {
+        echo "Login";   
         $input = $_REQUEST;
 
         // validation
@@ -33,7 +33,7 @@ class UserController
         if (!empty($validate)) {
             $_SESSION['validate'] = $validate;
             $_SESSION['input'] = $input;
-            header("Location: ../views/Login.php");
+            header("Location: index.php?mod=auth&act=login");
             return;
         }
 
@@ -55,10 +55,11 @@ class UserController
                     setcookie('remember_token', null, -1, '/', 'localhost');
                 }
             }
-            header("Location: ../controllers/RestaurantController.php?mod=restaurant");
+            header("Location: ?mod=restaurant&act=list");
         } else {
             $_SESSION['error'] = "Username or password is incorrect";
-            header("Location: ../views/Login.php");
+            $_SESSION['input'] = $input;
+            header("Location: ?mod=auth&act=login");
         }
     }
 
@@ -66,12 +67,16 @@ class UserController
     {
         $input = $_REQUEST;
 
+        $userModel = new User();
+
         // validation
         $validate = [];
         if (empty($input['email'])) {
             $validate['email'] = "Email is required";
         } elseif (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
             $validate['email'] = "Email is invalid";
+        } elseif ($userModel->isEmailTaken($input['email'])) {
+            $validate['email'] = "Email already exists";
         }
         if (empty($input['name'])) {
             $validate['name'] = "Name is required";
@@ -89,23 +94,17 @@ class UserController
         if (!empty($validate)) {
             $_SESSION['validate'] = $validate;
             $_SESSION['input'] = $input;
-            header("Location: ../views/Register.php");
+            header("Location: ?mod=auth&act=viewRegister");
             return;
         }
 
-        $userModel = new User();
-        if ($userModel->isEmailTaken($input['email'])) {
-            $_SESSION['error'] = "Email is taken";
-            header("Location: ../views/Register.php");
+        $user = $userModel->register($input['email'], $input['name'], $input['password']);
+        if ($user != null) {
+            $_SESSION['success'] = "Register successfully";
+            header("Location: ?mod=auth&act=viewLogin");
         } else {
-            $user = $userModel->register($input['email'], $input['name'], $input['password']);
-            if ($user != null) {
-                $_SESSION['success'] = "Register successfully";
-                header("Location: ../views/Login.php");
-            } else {
-                $_SESSION['error'] = "Error while registering";
-                header("Location: ../views/Register.php");
-            }
+            $_SESSION['error'] = "Error while registering";
+            header("Location: ?mod=auth&act=viewRegister");
         }
     }
 
@@ -116,21 +115,14 @@ class UserController
             unset($_COOKIE['remember_token']);
             setcookie('remember_token', null, -1, '/', 'localhost');
         }
-        header("Location: ../views/Login.php");
+        header("Location: ?mod=auth&act=viewLogin");
     }
 
-    public function __invoke()
-    {
-        if (isset($_POST['login'])) {
-            $this->login();
-        } elseif (isset($_POST['register'])) {
-            $this->register();
-        } elseif (isset($_POST['logout'])) {
-            $this->logout();
-        } else {
-            header("Location: ../views/Login.php");
-        }
+    public function viewLogin() {
+        require_once(__DIR__ . "/../views/Login.php");
+    }
+
+    public function viewRegister() {
+        require_once(__DIR__ . "/../views/Register.php");
     }
 };
-$userController = new UserController();
-$userController->__invoke();

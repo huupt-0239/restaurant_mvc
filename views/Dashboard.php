@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("../controllers/RememberTokenController.php");
@@ -7,7 +6,7 @@ require_once("../controllers/RememberTokenController.php");
 $user = $_SESSION['user'];
 if(!$user) {
     if(!$rememberTokenController->isUserLoggedIn()) {
-        header("Location: ../views/Login.php");
+        header("Location: ?mod=auth&act=viewLogin");
     } else {
         header("Refresh:0");
     }

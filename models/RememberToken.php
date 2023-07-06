@@ -13,7 +13,7 @@ class RememberToken
 
     public function findUserTokenBySelector(string $selector)
     {
-
+        $data = null;
         $sql = "SELECT id, selector, hashed_validator, user_id, expiry
                 FROM user_tokens
                 WHERE selector = '$selector' AND

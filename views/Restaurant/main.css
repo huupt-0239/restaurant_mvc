@@ -142,7 +142,7 @@ body {
 }
 
 .card-bottom {
-    padding: 25px;
+    padding: 15px 20px;
     border-top: 1px solid #eee;
     display: flex;
     justify-content: space-between;
