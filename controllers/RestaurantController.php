@@ -46,18 +46,39 @@ class RestaurantController
         $name = isset($_POST['name']) ? $_POST['name'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $image_url = isset($_POST['img_url']) ? $_POST['img_url'] : '';
-        if ($name == '' || $description == '' || $image_url == '') {
-            $_SESSION['fail'] = 'All fields are required'; 
+
+        // Validate
+        $validate = [];
+        if ($name == '') {
+            $validate['name'] = 'Name is required';
+        }
+        if ($description == '') {
+            $validate['description'] = 'Description is required';
+        }
+        if ($image_url == '') {
+            $validate['img_url'] = 'Image is required';
+        }
+        if (!empty($validate)) {
+            $_SESSION['validate'] = $validate;
+            $_SESSION['input'] = $_POST;
             header('Location: ?mod=restaurant&act=add');
+            return;
+        }
+
+        $input = [
+            'name' => $name,
+            'description' => $description,
+            'img_url' => $image_url,
+            'user_id' => $this->user_id
+        ];
+
+        $status = $this->model->store($input);
+        if ($status == true) {
+            $_SESSION['success'] = 'Thêm mới thành công';
+            header('Location: ?mod=restaurant&act=list');
         } else {
-            $status = $this->model->store($name, $description, $image_url, $this->user_id);
-            if ($status == true) {
-                $_SESSION['success'] = 'Thêm mới thành công'; 
-                header('Location: ?mod=restaurant&act=list');
-            } else {
-                $_SESSION['fail'] = 'Thêm mới thất bại'; 
-                header('Location: ?mod=restaurant&act=add');
-            }
+            $_SESSION['fail'] = 'Thêm mới thất bại';
+            header('Location: ?mod=restaurant&act=add');
         }
     }
 
@@ -79,7 +100,13 @@ class RestaurantController
             $_SESSION['fail'] = 'Bạn không có quyền sửa nhà hàng này';
             header('Location: ?mod=restaurant&act=list');
         } else {
-            $restaurant = $this->model->edit($id, $name, $description, $image_url, $user_id);
+            $input = [
+                'name' => $name,
+                'description' => $description,
+                'image_url' => $image_url,
+                'user_id' => $user_id
+            ];
+            $restaurant = $this->model->edit($id, $input);
             if ($restaurant == true) {
                 $_SESSION['success'] = 'Sửa thành công';
                 header('Location: ?mod=restaurant&act=list');
@@ -94,7 +121,7 @@ class RestaurantController
     {
         $id = isset($_GET['id']) ? $_GET['id'] : '';
         $restaurant = $this->model->findById($id);
-        if($restaurant['user_id'] != $this->user_id) {
+        if ($restaurant['user_id'] != $this->user_id) {
             $_SESSION['fail'] = 'Permission denied';
             header('Location: ?mod=restaurant&act=list');
         }
