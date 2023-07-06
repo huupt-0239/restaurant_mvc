@@ -1,4 +1,9 @@
 <?php
+require_once(__DIR__ . "/../../controllers/RememberTokenController.php");
+$rememberTokenController = new RememberTokenController();
+if (!$rememberTokenController->isUserLoggedIn()) {
+    header("Location: ?mod=auth&act=viewLogin");
+}
 if ($restaurant) {
     $id = $restaurant['id'];
     $name = $restaurant['name'];

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+require_once(__DIR__ . "/../../controllers/RememberTokenController.php");
+$rememberTokenController = new RememberTokenController();
+if(!$rememberTokenController->isUserLoggedIn()){
+    header("Location: ?mod=auth&act=viewLogin");
+}
 $validate = $_SESSION['validate'] ?? [];
 $input = $_SESSION['input'] ?? [];
 unset($_SESSION['validate']);

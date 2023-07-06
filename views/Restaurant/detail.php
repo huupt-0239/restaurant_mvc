@@ -1,4 +1,9 @@
 <?php
+require_once(__DIR__ . "/../../controllers/RememberTokenController.php");
+$rememberTokenController = new RememberTokenController();
+if (!$rememberTokenController->isUserLoggedIn()) {
+    header("Location: ?mod=auth&act=viewLogin");
+}
 if ($restaurant) {
     $id = $restaurant['id'];
     $name = $restaurant['name'];
@@ -30,7 +35,7 @@ if ($restaurant) {
 
     <body>
         <div class="flex mt-36 mb-36 items-center justify-center h-screen">
-            <div class="w-1/3 bg-white rounded shadow p-8">
+            <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=edit&id=<?php echo $id ?>" method="get">
                 <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
                 <div class="flex text-center items-center mb-6">
                     <h2>ID</h2>

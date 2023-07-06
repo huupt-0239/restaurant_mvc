@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../models/Restaurant.php');
 require_once(__DIR__ . '/../models/User.php');
+require_once(__DIR__ . '/../controllers/RememberTokenController.php');
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
     $userId = $user['id'];
@@ -18,14 +19,16 @@ class RestaurantController
     {
         $this->model = new Restaurant();
         $this->user = new User();
-        if (isset($_SESSION['user'])) {
+
+        $rememberController = new RememberTokenController();
+        if ($rememberController->isUserLoggedIn()) {
             $this->user_id = $_SESSION['user']['id'];
             $this->user_name = $_SESSION['user']['name'];
         } else {
-            header('Location: ?mod=auth&act=viewLogin');
+            header("Location: ?mod=auth&act=viewLogin");
         }
     }
-
+    
     function list()
     {
         $restaurants = $this->model->list();

@@ -1,6 +1,11 @@
 <?php
 require_once(__DIR__ . '/../../models/Restaurant.php');
 require_once(__DIR__ . '/../../controllers/UserController.php');
+require_once(__DIR__ . "/../../controllers/RememberTokenController.php");
+$rememberTokenController = new RememberTokenController();
+if (!$rememberTokenController->isUserLoggedIn()) {
+    header("Location: ?mod=auth&act=viewLogin");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
