@@ -10,9 +10,9 @@ class UserController
     public function __construct()
     {
         $this->rememberTokenController = new RememberTokenController();
-        if ($this->rememberTokenController->isUserLoggedIn()) {
-            header("Location: ?mod=restaurant&act=list");
-        }
+        // if ($this->rememberTokenController->isUserLoggedIn()) {
+        //     header("Location: ?mod=restaurant&act=list");
+        // }
     }
 
     public function login()
@@ -124,5 +124,11 @@ class UserController
 
     public function viewRegister() {
         require_once(__DIR__ . "/../views/Register.php");
+    }
+
+    public function findById($id) {
+        $userModel = new User();
+        $user = $userModel->findById($id);
+        return $user;
     }
 };

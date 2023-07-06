@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ . '/../../models/Restaurant.php');
+require_once(__DIR__ . '/../../controllers/UserController.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,22 +45,27 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
 
     <div class="cards">
         <?php foreach ($restaurants as $restaurant) {
+            $userId = $restaurant->getUserId();
+            $userController = new UserController();
+            $user = $userController->findById($userId);
         ?>
             <div class="card">
-                <a href="?mod=restaurant&act=detail&id=<?php echo $restaurant->id ?>">
-                    <img src=<?php echo $restaurant->img_url ?> alt="" class="card-image" />
+                <a href="?mod=restaurant&act=detail&id=<?php echo $restaurant->getId() ?>">
+                    <img src=<?php echo $restaurant->getImgUrl() ?> alt="" class="card-image" />
                     <div class="card-content">
                         <div class="card-top">
-                            <h3 class="card-title"><?php echo $restaurant->name ?></h3>
+                            <h3 class="card-title"><?php echo $restaurant->getName() ?></h3>
+                            <h4 class="card-description"><?php echo $restaurant->getDescription() ?></h4>
                         </div>
                         <div class="card-bottom">
                             <div class="card-user">
                                 <img src="public/img/user.png" alt="" class="card-user-avatar" />
                                 <div class="card-user-info">
                                     <div class="card-user-top">
-                                        <h4 class="card-user-name">User ID: <?php echo $restaurant->user_id ?></h4>
+                                        <h4 class="card-user-name"><?php echo $user['name'] ?></h4>
                                         <ion-icon name="checkmark-circle"></ion-icon>
                                     </div>
+                                    <div class="card-user-game"><?php echo $user['email'] ?></div>
                                 </div>
                             </div>
                         </div>

@@ -2,7 +2,6 @@
 require_once 'Base.php';
 require_once 'Entity/E_Restaurant.php';
 
-
 class Restaurant extends Base
 {
 
