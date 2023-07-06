@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-session_start();
-require_once("../controllers/RememberTokenController.php");
+require_once(__DIR__ . "/../controllers/RememberTokenController.php");
+$rememberTokenController = new RememberTokenController();
 if($rememberTokenController->isUserLoggedIn()){
-    header("Location: ../views/Dashboard.php");
+    header("Location: ?mod=restaurant&act=list");
 }
 $validate = $_SESSION['validate'] ?? [];
 $input = $_SESSION['input'] ?? [];
@@ -38,7 +38,7 @@ unset($_SESSION['input']);
             </div>
 
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form action="../controllers/UserController.php" class="space-y-6" method="post">
+                <form action="?mod=auth&act=login" class="space-y-6" method="post">
                 <div>
                         <div class="relative">
                             <input type="text" name="email" id="email" class="block focus:border-rose-500 border-2 px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-rose-500 peer" placeholder=" " value="<?php echo $input['email'] ?? ''; ?>">
@@ -75,7 +75,7 @@ unset($_SESSION['input']);
 
                 <p class="mt-10 text-center text-sm text-gray-500">
                     Not a member?
-                    <a href="./Register.php" class="font-semibold text-rose-500 hover:text-rose-400 leading-6 text-indigo-600 hover:text-indigo-500">Register Now!</a>
+                    <a href="?mod=auth&act=viewRegister" class="font-semibold text-rose-500 hover:text-rose-400 leading-6 text-indigo-600 hover:text-indigo-500">Register Now!</a>
                 </p>
             </div>
         </div>

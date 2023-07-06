@@ -76,4 +76,3 @@ class RememberTokenController
         return false;
     }
 };
-$rememberTokenController = new RememberTokenController();
