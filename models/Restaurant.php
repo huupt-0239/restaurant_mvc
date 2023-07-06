@@ -26,18 +26,20 @@ class Restaurant
         return $restaurants;
     }
 
-    public function store($name, $description, $img_url, $user_id )
+    public function store($name, $description, $img_url, $user_id)
     {
         $result = false;
         $sql = "INSERT INTO restaurants(name, description, img_url, user_id) 
                 VALUES ('$name', '$description', '$img_url', '$user_id')";
+
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }
         return $result;
     }
 
-    public function detail($id) {
+    public function detail($id)
+    {
         $data = array();
         $sql = "SELECT * FROM restaurants WHERE id = $id";
         $result = $this->conn->query($sql);
@@ -47,18 +49,20 @@ class Restaurant
         return $data;
     }
 
-    public function edit($id, $name, $description, $img_url, $user_id) {
+    public function edit($id, $name, $description, $img_url, $user_id)
+    {
         $result = false;
-        $sql = "UPDATE restaurants SET name = '$name', description = '$description', img_url = '$img_url', user_id = '$user_id' WHERE id = $id";
+        $sql = "UPDATE restaurants SET name = '$name', description = '$description', img_url = '$img_url', user_id = '$user_id' WHERE id = $id;";
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }
         return $result;
     }
 
-    public function delete($id, $user_id) {
+    public function delete($id)
+    {
         $result = false;
-        $sql = "DELETE FROM restaurants WHERE id = $id AND user_id = $user_id";
+        $sql = "DELETE FROM restaurants WHERE id = $id;";
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }

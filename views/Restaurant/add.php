@@ -40,8 +40,7 @@
 
 <body>
     <div class="flex items-center justify-center h-screen">
-        <form class="w-1/3 bg-white rounded shadow p-8" action="" method="get" onsubmit="return validateForm()">
-            <input type="hidden" name="act" value="store">
+        <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=store" method="post" onsubmit="return validateForm()">
             <h1 class="text-center text-4xl mb-16">Create Restaurant</h1>
             <div class="input-field">
                 <h2>Restaurant Name</h2>
@@ -105,33 +104,11 @@
             }
 
             if (hasError) {
-                return false; 
+                return false;
             }
 
-            return true; 
+            return true;
         }
-
-        <?php if (isset($_COOKIE['success'])) : ?>
-            const notyf = new Notyf({
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-            });
-            notyf.success("<?php echo $_COOKIE['success']; ?>");
-            document.cookie = "success=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        <?php endif; ?>
-
-        <?php if (isset($_COOKIE['fail'])) : ?>
-            const failNotyf = new Notyf({
-                position: {
-                    x: 'right',
-                    y: 'top',
-                },
-            });
-            failNotyf.error("<?php echo $_COOKIE['fail']; ?>");
-            document.cookie = "fail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        <?php endif; ?>
     </script>
 
 </html>

@@ -25,12 +25,12 @@ if ($restaurant) {
         <script src="https://cdn.jsdelivr.net/npm/notyf@3.3.0/notyf.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
-        <title>Restaurant Detail</title>
+        <title>Edit Restaurant </title>
     </head>
 
     <body>
         <div class="flex mt-36 mb-36 items-center justify-center h-screen">
-            <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=edit&id=<?php echo $id?>" method="get">
+            <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=update" method="POST">
                 <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
                 <div class="flex text-center items-center mb-6">
                     <h2>ID</h2>
@@ -39,27 +39,36 @@ if ($restaurant) {
                 </div>
                 <div class="flex text-center items-center mb-6">
                     <h2>Restaurant Name</h2>
-                    <input class="ml-10 justify-center rounded border border-gray-300 w-[17rem] px-3 py-2" type="text" name="name" value="<?php echo $name ?>" disabled>
+                    <input class="ml-10 justify-center rounded border border-gray-300 w-[17rem] px-3 py-2" type="text" name="name" value="<?php echo $name ?>">
                 </div>
                 <div class="flex text-center items-center mb-6">
                     <h2>Description</h2>
-                    <input class="ml-20 justify-center rounded border border-gray-300 px-3 w-[17rem] py-2" type="text" name="description" value="<?php echo $description ?>" disabled>
+                    <input class="ml-20 justify-center rounded border border-gray-300 px-3 w-[17rem] py-2" type="text" name="description" value="<?php echo $description ?>">
                 </div>
                 <input class="ml-[110px] justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="hidden" name="user" value="<?php echo $user_id ?>">
                 <div class="flex text-center items-center mb-16">
                     <h2>Image URL</h2>
-                    <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url; ?>">
+                    <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url ?>">
                 </div>
                 <div class="flex justify-center mb-12">
                     <img src="<?php echo $image_url ?>" alt="Restaurant Image" style="width: 400px; height: auto;">
                 </div>
-                <div class="flex justify-center ">
-                    <button class="rounded bg-blue-500 text-white px-6 py-2 ml-20" type="submit">Edit</button>
+                <div class="flex justify-between">
+                    <button class="rounded bg-blue-500 text-white px-6 py-2 ml-20" type="submit">Save</button>
+                    <button class="rounded bg-red-500 text-white px-6 py-2 mr-20" type="button" onclick="deleteRestaurant()">Delete</button>
                 </div>
             </form>
+            <form id="deleteForm" action="?mod=restaurant&act=delete&id=<?php echo $id?>" method="GET" style="display: none;">
+                <input type="hidden" name="id" value="<?php echo $id ?>">
+            </?>
         </div>
 
     </body>
+    <script>
+        function deleteRestaurant() {
+            document.getElementById("deleteForm").submit();
+        }
+    </script>
 
     </html>
 <?php

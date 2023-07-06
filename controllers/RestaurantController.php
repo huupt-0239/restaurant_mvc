@@ -43,20 +43,19 @@ class RestaurantController
 
     function store()
     {
-        $name = isset($_GET['name']) ? $_GET['name'] : '';
-        $description = isset($_GET['description']) ? $_GET['description'] : '';
-        $image_url = isset($_GET['img_url']) ? $_GET['img_url'] : '';
+        $name = isset($_POST['name']) ? $_POST['name'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $image_url = isset($_POST['img_url']) ? $_POST['img_url'] : '';
         if ($name == '' || $description == '' || $image_url == '') {
-            setcookie('fail', 'All fields are required', time() + 10);
+            $_SESSION['fail'] = 'All fields are required'; 
             header('Location: ?mod=restaurant&act=add');
         } else {
-
             $status = $this->model->store($name, $description, $image_url, $this->user_id);
             if ($status == true) {
-                setcookie('success', 'Thêm mới thành công', time() + 5);
+                $_SESSION['success'] = 'Thêm mới thành công'; 
                 header('Location: ?mod=restaurant&act=list');
             } else {
-                setcookie('fail', 'Thêm mới thất bại', time() + 5);
+                $_SESSION['fail'] = 'Thêm mới thất bại'; 
                 header('Location: ?mod=restaurant&act=add');
             }
         }
@@ -65,21 +64,27 @@ class RestaurantController
     function edit()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : '';
-        $name = isset($_GET['name']) ? $_GET['name'] : '';
-        $description = isset($_GET['description']) ? $_GET['description'] : '';
-        $user_id = isset($_GET['user']) ? $_GET['user'] : '';
-        $image_url = isset($_GET['img_url']) ? $_GET['img_url'] : '';
-        if ($user_id != $this->user_id) {
-            setcookie('fail', 'Bạn không có quyền sửa', time() + 5);
-            header('Location: ?mod=restaurant&act=add');
-        } else {
+        $restaurant = $this->model->detail($id);
+        require_once(__DIR__ . '/../views/Restaurant/edit.php');
+    }
 
+    function update()
+    {
+        $id = isset($_POST['id']) ? $_POST['id'] : '';
+        $name = isset($_POST['name']) ? $_POST['name'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $user_id = isset($_POST['user']) ? $_POST['user'] : '';
+        $image_url = isset($_POST['img_url']) ? $_POST['img_url'] : '';
+        if ($user_id != $this->user_id) {
+            $_SESSION['fail'] = 'Bạn không có quyền sửa nhà hàng này';
+            header('Location: ?mod=restaurant&act=list');
+        } else {
             $restaurant = $this->model->edit($id, $name, $description, $image_url, $user_id);
             if ($restaurant == true) {
-                setcookie('success', 'Sửa thành công', time() + 5);
-                header('Location: ?mod=restaurant&act=add');
+                $_SESSION['success'] = 'Sửa thành công';
+                header('Location: ?mod=restaurant&act=list');
             } else {
-                setcookie('fail', 'Sửa thất bại', time() + 5);
+                $_SESSION['fali'] = 'Sửa không thành công';
                 header('Location: ?mod=restaurant&act=edit&id=' . $id);
             }
         }
@@ -88,17 +93,22 @@ class RestaurantController
     function delete()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : '';
-        $status = $this->model->delete($id, $this->user_id);
+        $restaurant = $this->model->detail($id);
+        if($restaurant['user_id'] != $this->user_id) {
+            $_SESSION['fail'] = 'Permission denied';
+            header('Location: ?mod=restaurant&act=list');
+        }
+        $status = $this->model->delete($id);
         if ($status == true) {
-            setcookie('success', 'Xóa thành công', time() + 5);
+            $_SESSION['success'] = 'Xóa thành công';
             header('Location: RestaurantController.php?act=list');
         } else {
-            setcookie('fail', 'Xóa thất bại', time() + 5);
+            $_SESSION['fail'] = 'Xóa không thành công';
             header('Location: RestaurantController.php?act=detail&id=' . $id);
         }
     }
 
-    function add()  
+    function add()
     {
         require_once(__DIR__ . '/../views/Restaurant/add.php');
     }
