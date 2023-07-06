@@ -6,6 +6,7 @@ $rememberTokenController = new RememberTokenController();
 if (!$rememberTokenController->isUserLoggedIn()) {
     header("Location: ?mod=auth&act=viewLogin");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,7 +99,7 @@ if (!$rememberTokenController->isUserLoggedIn()) {
                 },
             });
             notyf.success("<?php echo $_SESSION['success']; ?>");
-            unset($_SESSION['success']);
+            <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['fail'])) : ?>
@@ -109,7 +110,7 @@ if (!$rememberTokenController->isUserLoggedIn()) {
                 },
             });
             failNotyf.error("<?php echo $_SESSION['fail']; ?>");
-            unset($_SESSION['fail']);
+            <?php unset($_SESSION['fail']); ?>
         <?php endif; ?>
     </script>
 </body>

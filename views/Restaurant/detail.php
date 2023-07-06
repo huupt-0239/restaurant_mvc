@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ . "/../../controllers/RememberTokenController.php");
+require_once(__DIR__ . "/../../controllers/UserController.php");
 $rememberTokenController = new RememberTokenController();
 if (!$rememberTokenController->isUserLoggedIn()) {
     header("Location: ?mod=auth&act=viewLogin");
@@ -10,6 +11,8 @@ if ($restaurant) {
     $description = $restaurant['description'];
     $image_url = $restaurant['img_url'];
     $user_id = $restaurant['user_id'];
+    $userController = new UserController();
+    $user = $userController->findById($user_id);
 ?>
 
     <!DOCTYPE html>
@@ -26,6 +29,29 @@ if ($restaurant) {
                 outline: none;
                 box-shadow: none;
             }
+
+            .card-user-top {
+                display: flex;
+                align-items: center;
+                margin-bottom: 2px;
+            }
+
+            .card-user-name {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 1;
+            }
+
+            .card-user-top ion-icon {
+                color: #20e3b2;
+                margin-left: 5px;
+            }
+
+            .card-user-game {
+                color: #999;
+                font-weight: 300;
+                font-size: 13px;
+            }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/notyf@3.3.0/notyf.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
@@ -34,38 +60,41 @@ if ($restaurant) {
     </head>
 
     <body>
-        <div class="flex mt-36 mb-36 items-center justify-center h-screen">
-            <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=edit&id=<?php echo $id ?>" method="get">
-                <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
-                <div class="flex text-center items-center mb-6">
-                    <h2>ID</h2>
-                    <input class="ml-36 justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="text" name="" value="<?php echo $id ?>" disabled>
-                    <input class="ml-36 justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="hidden" name="id" value="<?php echo $id ?>">
-                </div>
-                <div class="flex text-center items-center mb-6">
-                    <h2>Restaurant Name</h2>
-                    <input class="ml-10 justify-center rounded border border-gray-300 w-[17rem] px-3 py-2" type="text" name="name" value="<?php echo $name ?>" disabled>
-                </div>
-                <div class="flex text-center items-center mb-6">
-                    <h2>Description</h2>
-                    <input class="ml-20 justify-center rounded border border-gray-300 px-3 w-[17rem] py-2" type="text" name="description" value="<?php echo $description ?>" disabled>
-                </div>
-                <input class="ml-[110px] justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="hidden" name="user" value="<?php echo $user_id ?>">
-                <div class="flex text-center items-center mb-16">
-                    <h2>Image URL</h2>
-                    <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url; ?>" disabled>
-                </div>
-                <div class="flex justify-center mb-12">
-                    <img src="<?php echo $image_url ?>" alt="Restaurant Image" style="width: 400px; height: auto;">
-                </div>
-                <div class="flex justify-center ">
-                    <a href="?mod=restaurant&act=edit&id=<?php echo $id ?>">
-                        <button class="rounded bg-blue-500 text-white px-6 py-2 ml-20" type="submit">Edit</button>
-                    </a>
+
+        <div class="flex items-center justify-center h-screen bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400">
+            <div class="container mx-auto p-4 bg-white rounded-lg shadow">
+                <div class="flex">
+                    <div class="w-1/3">
+                        <img src="<?php echo $image_url ?>" alt="Restaurant Image" class="w-full h-auto rounded-lg">
+                    </div>
+                    <div class="w-2/3 flex flex-col justify-between pl-8">
+                        <div class="flex flex-col justify-between">
+                            <div class="flex justify-between">
+
+                                <h1 class="text-4xl font-bold"><?php echo $name ?></h1>
+                                <?php if ($isEditable) : ?>
+                                    <div class="flex justify-center">
+                                        <a href="?mod=restaurant&act=edit&id=<?php echo $id ?>">
+                                            <image src="https://www.freeiconspng.com/thumbs/edit-icon-png/edit-new-icon-22.png" style="width: 30px; align-items: center;" />
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+
+                            </div>
+
+                            <p class="text-lg mt-4"><?php echo $description ?></p>
+                        </div>
+                        <div class="card-user-info">
+                            <div class="card-user-top">
+                                <h4 class="card-user-name"><?php echo $user['name'] ?></h4>
+                                <ion-icon name="checkmark-circle"></ion-icon>
+                            </div>
+                            <div class="card-user-game"><?php echo $user['email'] ?></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
     </body>
 
     </html>

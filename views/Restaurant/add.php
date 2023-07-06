@@ -3,7 +3,7 @@
 <?php
 require_once(__DIR__ . "/../../controllers/RememberTokenController.php");
 $rememberTokenController = new RememberTokenController();
-if(!$rememberTokenController->isUserLoggedIn()){
+if (!$rememberTokenController->isUserLoggedIn()) {
     header("Location: ?mod=auth&act=viewLogin");
 }
 $validate = $_SESSION['validate'] ?? [];
@@ -42,6 +42,12 @@ unset($_SESSION['input']);
             position: absolute;
             left: 0;
         }
+
+        #img {
+            width: 260px;
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3.3.0/notyf.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,7 +70,7 @@ unset($_SESSION['input']);
             </div>
             <div class="input-field">
                 <div class="relative">
-                    <input type="text" name="description" id="name" class="block focus:border-rose-500 border-2 px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-rose-500 peer" placeholder=" " value="<?php echo $input['description'] ?? ''; ?>">
+                    <input type="text" name="description" id="description" class="block focus:border-rose-500 border-2 px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-rose-500 peer" placeholder=" " value="<?php echo $input['description'] ?? ''; ?>">
                     <label for="description" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-[0.8] top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-[0.8] peer-focus:-translate-y-4 left-1">Description</label>
                 </div>
                 <?php if (isset($validate['description'])) : ?>
