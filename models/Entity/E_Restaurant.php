@@ -5,6 +5,7 @@
         public $description;
         public $img_url;
         public $user_id;
+        public $user_name;
 
         function __construct($id, $name, $description, $img_url, $user_id) {
             $this->id = $id;
@@ -13,8 +14,5 @@
             $this->img_url = $img_url;
             $this->user_id = $user_id;
         }
-
-        
-
     }
 ?>

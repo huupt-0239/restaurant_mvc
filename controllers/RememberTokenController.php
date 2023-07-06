@@ -46,8 +46,14 @@ class RememberTokenController
         $expired_seconds = time() + 60 * 60 * 24 * $day;
         $expiry = date('Y-m-d H:i:s', $expired_seconds);
         $rememberTokenModel = new RememberToken();
-        $rememberTokenModel->deleteTokenByUserId($user_id);
-        if($rememberTokenModel->insert($user_id, $selector, $hashed_validator, $expiry)) {
+        $rememberTokenModel->delete($user_id);
+        $input = [
+            'user_id' => $user_id,
+            'selector' => $selector,
+            'hashed_validator' => $hashed_validator,
+            'expiry' => $expiry,
+        ];
+        if($rememberTokenModel->store($input)) {
             setcookie('remember_token', $token, $expired_seconds, '/', 'localhost');
         }
     }
@@ -61,7 +67,7 @@ class RememberTokenController
             $userToken = $this->isValidToken($token);
             if ($userToken) {
                 $userModel = new User();
-                $user = $userModel->findUserById($userToken['user_id']);
+                $user = $userModel->findById($userToken['user_id']);
                 if ($user) {
                     $userTmp = [
                         'id' => $user['id'],

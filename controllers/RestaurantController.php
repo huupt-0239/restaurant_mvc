@@ -36,8 +36,8 @@ class RestaurantController
     function detail()
     {
         $id = $_GET['id'];
-        $restaurant = $this->model->detail($id);
-        $user = $this->user->findUserById($restaurant['user_id']);
+        $restaurant = $this->model->findById($id);
+        $user = $this->user->findById($restaurant['user_id']);
         require_once(__DIR__ . '/../views/Restaurant/detail.php');
     }
 

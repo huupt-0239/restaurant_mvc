@@ -98,7 +98,7 @@ class UserController
             return;
         }
 
-        $user = $userModel->register($input['email'], $input['name'], $input['password']);
+        $user = $userModel->store($input);
         if ($user != null) {
             $_SESSION['success'] = "Register successfully";
             header("Location: ?mod=auth&act=viewLogin");
