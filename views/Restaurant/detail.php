@@ -30,7 +30,7 @@ if ($restaurant) {
 
     <body>
         <div class="flex mt-36 mb-36 items-center justify-center h-screen">
-            <form class="w-1/3 bg-white rounded shadow p-8" action="?mod=restaurant&act=edit&id=<?php echo $id?>" method="get">
+            <div class="w-1/3 bg-white rounded shadow p-8">
                 <h1 class="text-center text-4xl mb-6">Restaurant Detail</h1>
                 <div class="flex text-center items-center mb-6">
                     <h2>ID</h2>
@@ -48,15 +48,17 @@ if ($restaurant) {
                 <input class="ml-[110px] justify-center rounded border border-gray-300 px-3 py-2 w-[5rem]" type="hidden" name="user" value="<?php echo $user_id ?>">
                 <div class="flex text-center items-center mb-16">
                     <h2>Image URL</h2>
-                    <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url; ?>">
+                    <input class="ml-20 w-[17rem] justify-center rounded border border-gray-300 px-3 py-2" type="text" name="img_url" value="<?php echo $image_url; ?>" disabled>
                 </div>
                 <div class="flex justify-center mb-12">
                     <img src="<?php echo $image_url ?>" alt="Restaurant Image" style="width: 400px; height: auto;">
                 </div>
                 <div class="flex justify-center ">
-                    <button class="rounded bg-blue-500 text-white px-6 py-2 ml-20" type="submit">Edit</button>
+                    <a href="?mod=restaurant&act=edit&id=<?php echo $id ?>">
+                        <button class="rounded bg-blue-500 text-white px-6 py-2 ml-20" type="submit">Edit</button>
+                    </a>
                 </div>
-            </form>
+            </div>
         </div>
 
     </body>

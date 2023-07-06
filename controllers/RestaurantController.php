@@ -103,7 +103,7 @@ class RestaurantController
             $input = [
                 'name' => $name,
                 'description' => $description,
-                'image_url' => $image_url,
+                'img_url' => $image_url,
                 'user_id' => $user_id
             ];
             $restaurant = $this->model->edit($id, $input);
@@ -119,7 +119,7 @@ class RestaurantController
 
     function delete()
     {
-        $id = isset($_GET['id']) ? $_GET['id'] : '';
+        $id = isset($_POST['id']) ? $_POST['id'] : '';
         $restaurant = $this->model->findById($id);
         if ($restaurant['user_id'] != $this->user_id) {
             $_SESSION['fail'] = 'Permission denied';
@@ -128,10 +128,10 @@ class RestaurantController
         $status = $this->model->delete($id);
         if ($status == true) {
             $_SESSION['success'] = 'Xóa thành công';
-            header('Location: RestaurantController.php?act=list');
+            header('Location: ?mod=restaurant&act=list');
         } else {
             $_SESSION['fail'] = 'Xóa không thành công';
-            header('Location: RestaurantController.php?act=detail&id=' . $id);
+            header('Location: ?mod=restaurant&act=detail&id=' . $id);
         }
     }
 
