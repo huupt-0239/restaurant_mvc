@@ -35,7 +35,7 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
                     <img class="user-infor w-8 h-8 mr-2" src="public/img/user.png" alt="img_user">
                     <span class="user-name"><?php echo $user_name ?></span>
                 </div>
-                <div id="dropdownMenu" class="dropdown-menu hidden absolute right-0 mt-2 bg-white rounded-md shadow-lg py-2">
+                <div id="dropdownMenu" class="dropdown-menu hidden absolute right-0 mt-2 bg-white rounded-md shadow-lg py-2 z-10">
                     <a href="?mod=auth&act=logout" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
                 </div>
             </div>
@@ -79,26 +79,26 @@ require_once(__DIR__ . '/../../models/Restaurant.php');
             dropdownMenu.classList.toggle("hidden");
         }
 
-        <?php if (isset($_COOKIE['success'])) : ?>
+        <?php if (isset($_SESSION['success'])) : ?>
             const notyf = new Notyf({
                 position: {
                     x: 'right',
                     y: 'top',
                 },
             });
-            notyf.success("<?php echo $_COOKIE['success']; ?>");
-            document.cookie = "success=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            notyf.success("<?php echo $_SESSION['success']; ?>");
+            unset($_SESSION['success']);
         <?php endif; ?>
 
-        <?php if (isset($_COOKIE['fail'])) : ?>
+        <?php if (isset($_SESSION['fail'])) : ?>
             const failNotyf = new Notyf({
                 position: {
                     x: 'right',
                     y: 'top',
                 },
             });
-            failNotyf.error("<?php echo $_COOKIE['fail']; ?>");
-            document.cookie = "fail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            failNotyf.error("<?php echo $_SESSION['fail']; ?>");
+            unset($_SESSION['fail']);
         <?php endif; ?>
     </script>
 </body>

@@ -47,6 +47,9 @@ switch ($mod) {
             case 'edit':
                 $restaurantController->edit();
                 break;
+            case 'update':
+                $restaurantController->update();
+                break;
             case 'delete':
                 $restaurantController->delete();
                 break;

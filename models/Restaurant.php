@@ -18,7 +18,6 @@ class Restaurant extends Base
         }
         return $restaurants;
     }
-
     public function store($input)
     {
         $name = $input['name'];
@@ -29,6 +28,7 @@ class Restaurant extends Base
         $result = false;
         $sql = "INSERT INTO restaurants(name, description, img_url, user_id) 
                 VALUES ('$name', '$description', '$img_url', '$user_id')";
+
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }
@@ -45,16 +45,14 @@ class Restaurant extends Base
         }
         return $data;
     }
-
     public function edit($id, $input)
     {
         $name = $input['name'];
         $description = $input['description'];
         $img_url = $input['img_url'];
         $user_id = $input['user_id'];
-
         $result = false;
-        $sql = "UPDATE restaurants SET name = '$name', description = '$description', img_url = '$img_url', user_id = '$user_id' WHERE id = $id";
+        $sql = "UPDATE restaurants SET name = '$name', description = '$description', img_url = '$img_url', user_id = '$user_id' WHERE id = $id;";
         if ($this->conn->query($sql) === TRUE) {
             $result = true;
         }
