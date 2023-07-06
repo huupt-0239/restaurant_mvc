@@ -64,7 +64,7 @@ class RestaurantController
     function edit()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : '';
-        $restaurant = $this->model->detail($id);
+        $restaurant = $this->model->findById($id);
         require_once(__DIR__ . '/../views/Restaurant/edit.php');
     }
 
@@ -93,7 +93,7 @@ class RestaurantController
     function delete()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : '';
-        $restaurant = $this->model->detail($id);
+        $restaurant = $this->model->findById($id);
         if($restaurant['user_id'] != $this->user_id) {
             $_SESSION['fail'] = 'Permission denied';
             header('Location: ?mod=restaurant&act=list');

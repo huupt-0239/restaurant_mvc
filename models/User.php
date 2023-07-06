@@ -75,13 +75,12 @@ class User extends Base
         return $result;
     }
 
-
-
     public function edit($id, $data)
     {
-        $email = $data['email'];
         $name = $data['name'];
-        $sql = "UPDATE users SET email = '$email', name = '$name' WHERE id = '$id'";
+        $password = $data['password'];
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE users SET name = '$name', password = '$hashed_password' WHERE id = '$id'";
         $result = $this->conn->query($sql);
         return $result;
     }
