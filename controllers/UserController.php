@@ -33,10 +33,9 @@ class UserController
         if (!empty($validate)) {
             $_SESSION['validate'] = $validate;
             $_SESSION['input'] = $input;
-            header("Location: index.php?mod=auth&act=login");
+            header("Location: index.php?mod=auth&act=viewLogin");
             return;
         }
-
 
         $userModel = new User();
         $user = $userModel->login($input['email'], $input['password']);
@@ -59,7 +58,7 @@ class UserController
         } else {
             $_SESSION['error'] = "Username or password is incorrect";
             $_SESSION['input'] = $input;
-            header("Location: ?mod=auth&act=login");
+            header("Location: ?mod=auth&act=viewLogin");
         }
     }
 
