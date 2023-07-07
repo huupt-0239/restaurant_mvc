@@ -1,16 +1,8 @@
 <?php
-require_once 'DBConnection.php';
+require_once 'Base.php';
 
-class User
+class User extends Base
 {
-    private $conn;
-
-    public function __construct()
-    {
-        $db = new DBConnection();
-        $this->conn = $db->getConnection();
-    }
-
 
     public function findUserByUsername($username)
     {
@@ -48,7 +40,7 @@ class User
         return $data;
     }
 
-    public function findUserById($id)
+    public function findById($id)
     {
         $data = array();
         $sql = "SELECT * FROM users WHERE id = '$id'";
@@ -72,11 +64,42 @@ class User
         return $data;
     }
 
-    public function register($email, $name, $password)
+    public function store($data)
     {
+        $email = $data['email'];
+        $name = $data['name'];
+        $password = $data['password'];
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$hashed_password')";
+        $sql = "INSERT INTO users (email, name, password) VALUES ('$email', '$name', '$hashed_password');";
         $result = $this->conn->query($sql);
         return $result;
+    }
+
+    public function edit($id, $data)
+    {
+        $name = $data['name'];
+        $password = $data['password'];
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE users SET name = '$name', password = '$hashed_password' WHERE id = '$id'";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+    public function delete($user_id)
+    {
+        $sql = "DELETE FROM users WHERE id = '$user_id'";
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
+    public function list()
+    {
+        $data = array();
+        $sql = "SELECT * FROM users";
+        $result = $this->conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            array_push($data, $row);
+        }
+        return $data;
     }
 }
